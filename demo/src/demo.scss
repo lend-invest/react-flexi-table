@@ -1,0 +1,133 @@
+.Demo {
+  margin-left: 50px;
+  font-family: 'system-ui';
+}
+
+
+.DemoTable {
+  position: relative;
+  margin-bottom: 15px;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 26px;
+
+
+  ul.Demo--customer-sub-details {
+    display: flex;
+    flex-flow: row nowrap;
+    list-style: none;
+    padding: 3px 0 0 0;
+    margin: 0;
+
+    li {
+      font-size: 15px;
+      flex: 0 1 auto;
+      color: #333D45;
+      border-left: 1px solid #d6d6d6;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    li:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+
+  .FlexiTable--border-box {
+    border: 1px solid #d6d6d6;
+  }
+
+  .FlexiTable--header {
+    .FlexiTableSectionVSpace {
+      height: 20px;
+    }
+  }
+
+  .FlexiTableHeaderRow {
+    background-color: rgba(234,234,234,0.1);
+    border-bottom: 1px solid #d6d6d6;
+
+    .FlexiTableCell {
+      font-style: normal;
+      font-weight: 600;
+
+
+      ul.DemoTable--loan-subinfo-list {
+        font-style: normal;
+        font-weight: 400;
+
+
+        li {
+          font-size: 12px; //non-standard
+          line-height: 18px;
+        }
+      }
+    }
+  }
+
+  .FlexiTableRowVSpace {
+    height: 15px;
+  }
+
+  .FlexiTableSectionVSpace {
+    height: 15px;
+  }
+
+  .FlexiTableBodyRow:nth-child(even) {
+    background-color: rgba(234,234,234,0.1);
+  }
+
+  .FlexiTableBodyRow:nth-child(odd) {
+	  background-color: rgba(234,234,234,0.4);
+  }
+
+  .FlexiTable--column-Region {
+    .FlexiTableCell {
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inherit;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .FlexiTable--column-LastPaymentAmount, .FlexiTable--column-OverdueAmount {
+    .FlexiTableCell {
+      text-align: right;
+    }
+  }
+
+  .FlexiTable--column-Region,
+  .FlexiTable--column-Comment {
+    .FlexiTableBodyCell {
+      font-size: 17px;
+      line-height: 26px;
+    }
+  }
+
+  .FlexiTable--column-Status {
+    .FlexiTableBodyCell {
+      font-size: 17px;
+      line-height: 26px;
+      overflow: visible;
+    }
+  }
+
+  .FlexiTable--column-Status.good {
+    .FlexiTableCell div {
+      border-bottom: 3px solid #54a054;
+    }
+    background-color: #d1e4d1;
+  }
+
+  .FlexiTable--column-Status.bad {
+    .FlexiTableCell div {
+      border-bottom: 3px solid #f56600;
+    }
+    background-color: #fdbd8f;
+  }
+}
