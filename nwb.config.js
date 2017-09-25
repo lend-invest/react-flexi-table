@@ -5,7 +5,11 @@ module.exports = {
     umd: {
       global: 'ReactFlexiTable',
       externals: {
-        react: 'React'
+        react: 'React',
+        'classnames': 'classnames',
+        'react-measure': 'react-measure',
+        'lodash': 'lodash',
+        'decimal.js-light': 'decimal.js-light'
       }
     }
   }

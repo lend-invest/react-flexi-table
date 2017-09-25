@@ -1,0 +1,140 @@
+.Demo {
+  margin-left: 50px;
+}
+
+
+.DemoTable {
+  position: relative;
+  margin-bottom: 15px;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 26px;
+
+
+  ul.DemoTable--loan-subinfo-list {
+    display: flex;
+    flex-flow: row nowrap;
+    list-style: none;
+    padding: 3px 0 0 0;
+    margin: 0;
+
+    li {
+      font-size: 17px;
+      flex: 0 1 auto;
+      color: #333D45;
+      border-left: 1px solid #d6d6d6;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+
+    li:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+
+  .FlexiTable--border-box {
+    border: 1px solid #d6d6d6;
+  }
+
+  .FlexiTable--header {
+    .FlexiTableSectionVSpace {
+      height: 20px;
+    }
+  }
+
+  .FlexiTableHeaderRow {
+    background-color: rgba(234,234,234,0.1);
+    border-bottom: 1px solid #d6d6d6;
+
+    .FlexiTableHeaderCell {
+      font-style: normal;
+      font-weight: 600;
+
+
+      ul.DemoTable--loan-subinfo-list {
+        font-style: normal;
+        font-weight: 400;
+
+
+        li {
+          font-size: 12px; //non-standard
+          line-height: 18px;
+        }
+      }
+    }
+  }
+
+  .FlexiTableRowVSpace {
+    height: 15px;
+  }
+
+  .FlexiTableSectionVSpace {
+    height: 15px;
+  }
+
+  .FlexiTableRow:nth-child(even) {
+    background-color: rgba(234,234,234,0.1);
+  }
+
+  .FlexiTableRow:nth-child(odd) {
+	  background-color: rgba(234,234,234,0.4);
+  }
+
+  .FlexiTable--column-Loan {
+    .FlexiTableCell--inner {
+      a {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inherit;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .FlexiTable--column-Invested, .FlexiTable--column-Repaid {
+    .FlexiTableCell--inner {
+      text-align: right;
+    }
+  }
+
+  .FlexiTable--column-Repayment, .FlexiTable--column-Completed {
+    .FlexiTableCell--inner {
+      text-align: right;
+    }
+  }
+
+  .FlexiTable--column-Status {
+    &.FlexiTableCell .FlexiTableCell--inner {
+      font-size: 15px; //non-standard
+      line-height: 23px;
+      overflow: visible; //so the underline will show up correctly
+    }
+  }
+
+  .FlexiTable--column-Status.good {
+    .FlexiTableCell--inner span {
+      border-bottom: 3px solid #54a054;
+    }
+  }
+
+  .FlexiTable--column-Status.unknown {
+    .FlexiTableCell--inner span {
+      border-bottom: 3px solid #efbe02;
+    }
+  }
+
+  .FlexiTable--column-Status.bad {
+    .FlexiTableCell--inner span {
+      border-bottom: 3px solid #f56600;
+    }
+  }
+
+  .FlexiTable--column-Status.very-bad {
+    .FlexiTableCell--inner span {
+      border-bottom: 3px solid #d90303;
+    }
+  }
+}
