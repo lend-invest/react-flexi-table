@@ -14,7 +14,7 @@
 .FlexiTable.FlexiTable--measure-mode {
   display: inherit;
 
-  .FlexiTableCell, .FlexiTableHeaderCell {
+  .FlexiTableCell--outer, .FlexiTableHeaderCell--outer {
     display: inherit;
     flex: inherit;
     flex-flow: inherit;
@@ -41,7 +41,7 @@
   flex-flow: row nowrap;
 }
 
-.FlexiTableCell, .FlexiTableHeaderCell {
+.FlexiTableCell--outer, .FlexiTableHeaderCell--outer {
   box-sizing: border-box;
   flex-flow: row nowrap;
   flex: 0 0 0;
@@ -61,7 +61,7 @@
   flex: 1 0 auto;
 }
 
-.FlexiTableCell--inner {
+.FlexiTableCell {
   box-sizing: border-box;
   width: 100%;
   display: inline-block;

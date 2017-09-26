@@ -35,11 +35,9 @@ export default class FlexiTableHeaderCell extends React.Component {
     return (
       <div
         className={classnames(
-          'FlexiTableHeaderCell',
-          `FlexiTableHeaderCell--column-${columnNumber}`,
-          `FlexiTable-column-num-${columnNumber}`,
+          'FlexiTableHeaderCell--outer',
+          `FlexiTableHeaderCell--column-num-${columnNumber}`,
           {
-            [`FlexiTableHeaderCell--${columnName}`]: !!columnName,
             [`FlexiTable--column-${columnName}`]: !!columnName,
           }
         )}
@@ -52,7 +50,7 @@ export default class FlexiTableHeaderCell extends React.Component {
           halfGutterWidth={halfGutterWidth}
           marginWidth={marginWidth}
         >
-          <div className='FlexiTableCell--inner'>
+          <div className='FlexiTableCell'>
             <CellComponent
               columnName={columnName}
               columnNumber={columnNumber}

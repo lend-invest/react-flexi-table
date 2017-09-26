@@ -1,7 +1,10 @@
 {
   "name": "react-flexi-table",
   "version": "0.1.0",
-  "description": "react-flexi-table React component",
+  "description": "React Table component that can dynamically adjust column widths to fit content and space.",
+  "author": "LendInvest (lendinvest.com)",
+  "license": "MIT",
+  "repository": "https://github.com/lend-invest/react-flexi-table",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -35,10 +38,6 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   },
-  "author": "LendInvest",
-  "homepage": "",
-  "license": "MIT",
-  "repository": "https://github.com/lend-invest/react-flexi-table",
   "keywords": [
     "react-component"
   ]

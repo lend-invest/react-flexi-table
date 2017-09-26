@@ -88,7 +88,7 @@ export default class FlexiTable extends React.Component {
     this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}` , 0)
     this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTableHeaderRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}` , 0)
     columnsWithWidths.forEach(c => {
-      this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell--inner { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}` , 0)
+      this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}` , 0)
     })
   }
 
@@ -189,7 +189,7 @@ export default class FlexiTable extends React.Component {
     // isInMeasureMode = true should have caused each cell to grow to the
     // maximum width. Now we just need to go through them all and collect
     // the data.
-    const cellSelector = `.FlexiTable-${this.uuid} .FlexiTable--column-${columnName} .FlexiTableCell--inner`
+    const cellSelector = `.FlexiTable-${this.uuid} .FlexiTable--column-${columnName} .FlexiTableCell`
     const cells = this.tableRef.querySelectorAll(cellSelector)
     const result = _map(cells, x => x.scrollWidth)
     return result

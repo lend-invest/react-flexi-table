@@ -49,7 +49,7 @@
     background-color: rgba(234,234,234,0.1);
     border-bottom: 1px solid #d6d6d6;
 
-    .FlexiTableHeaderCell {
+    .FlexiTableCell {
       font-style: normal;
       font-weight: 600;
 
@@ -84,7 +84,7 @@
   }
 
   .FlexiTable--column-Loan {
-    .FlexiTableCell--inner {
+    .FlexiTableCell {
       a {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -95,19 +95,19 @@
   }
 
   .FlexiTable--column-Invested, .FlexiTable--column-Repaid {
-    .FlexiTableCell--inner {
+    .FlexiTableCell {
       text-align: right;
     }
   }
 
   .FlexiTable--column-Repayment, .FlexiTable--column-Completed {
-    .FlexiTableCell--inner {
+    .FlexiTableCell {
       text-align: right;
     }
   }
 
   .FlexiTable--column-Status {
-    &.FlexiTableCell .FlexiTableCell--inner {
+    &.FlexiTableCell .FlexiTableCell {
       font-size: 15px; //non-standard
       line-height: 23px;
       overflow: visible; //so the underline will show up correctly
@@ -115,25 +115,25 @@
   }
 
   .FlexiTable--column-Status.good {
-    .FlexiTableCell--inner span {
+    .FlexiTableCell span {
       border-bottom: 3px solid #54a054;
     }
   }
 
   .FlexiTable--column-Status.unknown {
-    .FlexiTableCell--inner span {
+    .FlexiTableCell span {
       border-bottom: 3px solid #efbe02;
     }
   }
 
   .FlexiTable--column-Status.bad {
-    .FlexiTableCell--inner span {
+    .FlexiTableCell span {
       border-bottom: 3px solid #f56600;
     }
   }
 
   .FlexiTable--column-Status.very-bad {
-    .FlexiTableCell--inner span {
+    .FlexiTableCell span {
       border-bottom: 3px solid #d90303;
     }
   }
