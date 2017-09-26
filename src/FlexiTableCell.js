@@ -65,7 +65,7 @@ export default class FlexiTableCell extends React.Component {
 
     const cellData = this.getCellData()
     const outerCellClassName = cellClassNameSelector
-      && cellClassNameSelector(rowData, rowNumber, columnName, columnNumber)
+      && cellClassNameSelector({cellData, rowData, rowNumber, columnName, columnNumber})
     const CellComponent = cellComponent || FlexiTableDefaultCellComponent
 
     return (
@@ -88,11 +88,13 @@ export default class FlexiTableCell extends React.Component {
           halfGutterWidth={halfGutterWidth}
           marginWidth={marginWidth}
         >
-          <div className='FlexiTableCell'>
+          <div className='FlexiTableBodyCell FlexiTableCell'>
             <CellComponent
               cellData={cellData}
               rowNumber={rowNumber}
               rowData={rowData}
+              columnName={columnName}
+              columnNumber={columnNumber}
             />
           </div>
         </FlexiTableCellSpacer>

@@ -1,5 +1,6 @@
 .Demo {
   margin-left: 50px;
+  font-family: 'system-ui';
 }
 
 
@@ -13,7 +14,7 @@
   line-height: 26px;
 
 
-  ul.DemoTable--loan-subinfo-list {
+  ul.Demo--customer-sub-details {
     display: flex;
     flex-flow: row nowrap;
     list-style: none;
@@ -21,7 +22,7 @@
     margin: 0;
 
     li {
-      font-size: 17px;
+      font-size: 15px;
       flex: 0 1 auto;
       color: #333D45;
       border-left: 1px solid #d6d6d6;
@@ -83,9 +84,9 @@
 	  background-color: rgba(234,234,234,0.4);
   }
 
-  .FlexiTable--column-Loan {
+  .FlexiTable--column-Region {
     .FlexiTableCell {
-      a {
+      span {
         overflow: hidden;
         text-overflow: ellipsis;
         display: inherit;
@@ -94,47 +95,39 @@
     }
   }
 
-  .FlexiTable--column-Invested, .FlexiTable--column-Repaid {
+  .FlexiTable--column-LastPaymentAmount, .FlexiTable--column-OverdueAmount {
     .FlexiTableCell {
       text-align: right;
     }
   }
 
-  .FlexiTable--column-Repayment, .FlexiTable--column-Completed {
-    .FlexiTableCell {
-      text-align: right;
+  .FlexiTable--column-Region,
+  .FlexiTable--column-Comment {
+    .FlexiTableBodyCell {
+      font-size: 17px;
+      line-height: 26px;
     }
   }
 
   .FlexiTable--column-Status {
-    &.FlexiTableCell .FlexiTableCell {
-      font-size: 15px; //non-standard
-      line-height: 23px;
-      overflow: visible; //so the underline will show up correctly
+    .FlexiTableBodyCell {
+      font-size: 17px;
+      line-height: 26px;
+      overflow: visible;
     }
   }
 
   .FlexiTable--column-Status.good {
-    .FlexiTableCell span {
+    .FlexiTableCell div {
       border-bottom: 3px solid #54a054;
     }
-  }
-
-  .FlexiTable--column-Status.unknown {
-    .FlexiTableCell span {
-      border-bottom: 3px solid #efbe02;
-    }
+    background-color: #d1e4d1;
   }
 
   .FlexiTable--column-Status.bad {
-    .FlexiTableCell span {
+    .FlexiTableCell div {
       border-bottom: 3px solid #f56600;
     }
-  }
-
-  .FlexiTable--column-Status.very-bad {
-    .FlexiTableCell span {
-      border-bottom: 3px solid #d90303;
-    }
+    background-color: #fdbd8f;
   }
 }

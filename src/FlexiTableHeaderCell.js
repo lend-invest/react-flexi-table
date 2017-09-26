@@ -50,7 +50,7 @@ export default class FlexiTableHeaderCell extends React.Component {
           halfGutterWidth={halfGutterWidth}
           marginWidth={marginWidth}
         >
-          <div className='FlexiTableCell'>
+          <div className='FlexiTableHeaderCell FlexiTableCell'>
             <CellComponent
               columnName={columnName}
               columnNumber={columnNumber}

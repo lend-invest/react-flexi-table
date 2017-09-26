@@ -8,7 +8,7 @@ import FlexiTable from '../../src'
 import './demo.scss'
 
 function CurrencyValue(props) {
-  const formatter = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' })
+  const formatter = new Intl.NumberFormat('en-GB', { style: 'currency', currency: props.currency })
   return (<span>{formatter.format(props.amount)}</span>)
 }
 
@@ -27,66 +27,66 @@ class Demo extends Component {
 
     // Example  table data
     const tableData = [{
-      loan_details: {
-        address: { street: 'London Lane', county: 'London', postcode: 'E8' },
-        ltv: '43.75',
-        repayment_date: '2017-07-26',
-        state: 'In arrears',
-        isExtended: false,
+      customer: {
+        firstName: 'John',
+        lastName: 'Smith',
+        postCode: 'N1 1CC',
+        region: 'London'
       },
-      tranche_name: 'A',
-      invested_amount: { currency: 'GBP', amount: '868.00' },
-      interest_rate: '6.50',
-      unpaid_interest: null,
+      account: {
+        id: 'P-122334',
+        signupDate: '2017-02-24',
+        lifetimeValue: { currency: 'GBP', amount: '830.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-26',
+        nextPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        lastPaymentDate: '2017-06-20',
+        lastPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        status: 'Up to date',
+        comment: ''
+      },
     }, {
-      loan_details: {
-        address: { street: 'Old Montague Street', county: 'London', postcode: 'N1' },
-        ltv: '53.88',
-        repayment_date: '2017-10-20',
-        state: 'On schedule',
-        isExtended: true,
+      customer: {
+        firstName: 'Margery',
+        lastName: 'Knotswood',
+        postCode: 'KT3 3AB',
+        region: 'Sutton-under-Whitestonecliffe'
       },
-      tranche_name: 'A',
-      invested_amount: { currency: 'GBP', amount: '1000.00' },
-      interest_rate: '7.00',
-      unpaid_interest: null,
+      account: {
+        id: 'P-K34212',
+        signupDate: '2012-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '12004.50' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-06-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Up to date',
+        comment: ''
+      },
     }, {
-      loan_details: {
-        address: { street: 'Chase Side', county: 'London', postcode: 'N14' },
-        ltv: '63.75',
-        repayment_date: '2017-10-28',
-        state: 'In arrears',
-        isExtended: false,
+      customer: {
+        firstName: 'Christopher',
+        lastName: 'Dianetasmark',
+        postCode: 'KT3 3AB',
+        region: 'Kent'
       },
-      tranche_name: 'A',
-      invested_amount: { currency: 'GBP', amount: '772.00' },
-      interest_rate: '7.75',
-      unpaid_interest: { currency: 'GBP', amount: '30.00' },
-    }, {
-      loan_details: {
-        address: { street: 'Woodside Avenue', county: 'London', postcode: 'N6' },
-        ltv: '75.00',
-        repayment_date: '2017-10-29',
-        state: 'On schedule',
-        isExtended: false,
+      account: {
+        id: 'A-948121',
+        signupDate: '2015-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '1689.00' },
       },
-      tranche_name: 'A',
-      invested_amount: { currency: 'GBP', amount: '100.00' },
-      interest_rate: '7.70',
-      unpaid_interest: null,
-    }, {
-      loan_details: {
-        address: { street: 'Harold Road', county: 'London', postcode: 'NSE19' },
-        ltv: '61.55',
-        repayment_date: '2017-10-29',
-        state: 'Out of term / in breach',
-        isExtended: false,
-        isPartRepaid: true,
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-04-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Overdue',
+        overdueAmount:  { currency: 'GBP', amount: '177.00' },
+        comment: 'This customer is consistently late with payments and can be difficult to contact.'
       },
-      tranche_name: 'A',
-      invested_amount: { currency: 'GBP', amount: '100.00' },
-      interest_rate: '7.70',
-      unpaid_interest: null,
     }]
 
 
@@ -96,12 +96,12 @@ class Demo extends Component {
       headerComponent: () => {
         return (
           <div>
-            <div>Loan</div>
-            <div>
-              <span> Tranche </span> |
-              <span> Interest rate</span> |
-              <span> Loan to value</span>
-            </div>
+            <div>Customer</div>
+            <ul className="Demo--customer-sub-details">
+              <li>Account</li>
+              <li>Sign up date</li>
+              <li>Lifetime Value</li>
+            </ul>
           </div>
         )
       },
@@ -110,61 +110,70 @@ class Demo extends Component {
       cellComponent: ({cellData: x}) => {
         return (
           <div>
-            <div>{x.loan_details.address.street}, {x.loan_details.address.county}, {x.loan_details.address.postcode}</div>
-            <div>
-              <span> {x.tranche_name}</span> |
-              <span> {x.interest_rate}</span> |
-              <span> {x.loan_details.ltv}</span>
-            </div>
+            <div>{x.customer.lastName}, {x.customer.firstName}</div>
+            <ul className="Demo--customer-sub-details">
+              <li>{x.account.id}</li>
+              <li><DateValue date={x.account.signupDate} /></li>
+              <li><CurrencyValue {...x.account.lifetimeValue} /></li>
+            </ul>
+          </div>
+        )
+      },
+      minWidth: 300,
+      maxWidth: 380,
+
+    }, {
+      name: 'Region',
+      headerComponent: () => <span>Region</span>,
+      // for the cell data you can define a function
+      cellDataSelector: x => x.customer.region,
+      cellComponent: ({cellData: x}) => <span>{x}</span>,
+      maxWidth: 150,
+      minWidth: 75,
+
+    }, {
+      name: 'LastPaymentDate',
+      headerComponent: () => <span>Last Payment</span>,
+      // or for the cell data you can define a path that lodash.get can use
+      cellDataSelector: 'subscription.lastPaymentDate',
+      cellComponent: ({cellData: x}) => <DateValue date={x} />,
+      fixedWidth: 120,
+
+    }, {
+      name: 'LastPaymentAmount',
+      headerComponent: () => <span>Amount</span>,
+      cellDataSelector: 'subscription.nextPaymentAmount',
+      cellComponent: ({cellData: x}) => <CurrencyValue {...x} />,
+      minWidth: 70,
+      //we want it to expand to it's content. We should never wrap currencies
+      fitToContentWidth: true,
+
+    }, {
+      name: 'Status',
+      headerComponent: () => <span>Status</span>,
+      cellDataSelector: 'subscription.status',
+      // we can define a function to derive a css class to be used on the
+      // outer-cell for styling.
+      cellClassNameSelector: ({cellData: x}) => x === 'Up to date' ? 'good' : 'bad',
+      // use the default cell component
+      fitToContentWidth: true,
+
+    }, {
+      name: 'Comment',
+      headerComponent: () => <span>Comment</span>,
+      // If we don't use a cellDataSelector we'll get the whole data item used for the row
+      cellComponent: ({cellData: x}) => {
+        const overdueTime = moment(x.subscription.lastPaymentDate).from(moment('2017-09-30').subtract('months', 1), true)
+
+        return (
+          <div>
+            { x.subscription.overdueAmount && <div><strong>Overdue:</strong> {overdueTime}</div> }
+            { x.subscription.comment && <div><strong>Comment:</strong> {x.subscription.comment}</div> }
           </div>
         )
       },
       minWidth: 200,
       maxWidth: 350,
-
-    }, {
-      name: 'Invested',
-      headerComponent: () => <span>Invested</span>,
-      // for the cell data you can define a path that lodash.get can use
-      cellDataSelector: 'invested_amount.amount',
-      cellComponent: ({cellData: x}) => <CurrencyValue amount={x} />,
-      minWidth: 100,
-      fitToContentWidth: true,
-
-    }, {
-      name: 'Repayment',
-      headerComponent: () => <span>Repayment</span>,
-      // or for the cell data you can define a function
-      cellDataSelector: x => x.loan_details.repayment_date,
-      cellComponent: ({cellData: x}) => <DateValue date={x} />,
-      fixedWidth: 100,
-
-    }, {
-      name: 'Performance',
-      headerComponent: () => <span>Performance</span>,
-      cellDataSelector: 'loan_details.state',
-      fitToContentWidth: true,
-      // use the default cell component
-
-    }, {
-      name: 'Comment',
-      headerComponent: () => <span>Comment</span>,
-      // Dont use a cellDataSelector in this case, we'll use the rowData as is
-      //cellDataSelector: '',
-      // Build our own cell component for this case
-      cellComponent: ({cellData: x}) => {
-        const unpaidInterestAmount = _get(x, 'unpaid_interest.amount')
-        return (
-          <div>
-            { x.loan_details.isExtended && <div>Extended</div> }
-            { x.loan_details.isPartRepaid && <div>Part repaid</div> }
-            { unpaidInterestAmount &&
-                <div><CurrencyValue amount={unpaidInterestAmount} /> income owed</div> }
-          </div>
-        )
-      },
-      minWidth: 120,
-      maxWidth: 300,
     }]
 
     return (
