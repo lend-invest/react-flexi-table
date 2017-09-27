@@ -36,9 +36,9 @@ describe('with buildWidthData', () => {
   it('should get the extended width for each columns', () => {
     const gatheredWidths = buildWidthData(columns, getColumnCellWidthsMock)
     expect(Object.keys(gatheredWidths).length).toBe(3)
-    expect(gatheredWidths['A']).toEqual({ name: 'A', contentWidth: 102 + 1 })
-    expect(gatheredWidths['B']).toEqual({ name: 'B', contentWidth: 38 + 1 })
-    expect(gatheredWidths['C']).toEqual({ name: 'C', contentWidth: 256 + 1 })
+    expect(gatheredWidths['A']).toEqual({ name: 'A', contentWidth: 102 + 2 })
+    expect(gatheredWidths['B']).toEqual({ name: 'B', contentWidth: 38 + 2 })
+    expect(gatheredWidths['C']).toEqual({ name: 'C', contentWidth: 256 + 2 })
   })
 
   it('should have an empty result object if no columns', () => {
