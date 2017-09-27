@@ -79,7 +79,7 @@ export default class FlexiTableCell extends React.Component {
       <div
         className={classnames(
           'FlexiTableCell--outer',
-          `FlexiTableCell--column-num-${columnNumber}`,
+          `FlexiTable--column-num-${columnNumber}`,
           outerCellClassName,
           {
             [`FlexiTable--column-${columnName}`]: !!columnName,

@@ -168,22 +168,150 @@ You can add additional props to the column definitions which will be passed thro
 
 ### Guide to styling
 
-Please see `/demo/src/demo.scss` for an example.
+Please see `/demo/src/demo.scss` for a full example.
 
-ToDo:
+Specific Styling Examples:
 
-Examples for:
-- Spacing above & below columns
-- Border around the table
-- Alternating background colors for rows
-- Right & Left aligning columns
-- Overflow ellipsis
-- Heading styles
-- Different font-sizes for body columns
+**Spacing above & below row**
 
-Also:
-- Describe inner vs outer, and how gutters work regarding styling and divs.
-- Describe how each column gets a custom uuid for internal calculations.
+There are currently two primary classes for setting the spacing above and below rows: `FlexiTableSectionVSpace` and `FlexiTableRowVSpace`. 
+
+`FlexiTableSectionVSpace` will appear above the first row of a section and below the last row of a section, where a section is the header or body. Additionally there is `FlexiTableSectionVSpace--edge-top` and `FlexiTableSectionVSpace--edge-bottom` if you want to get more specifc. So if you wanted to make the top of the header at 50px and set the rest at 15px you could do the following:
+
+```css
+.FlexiTableSectionVSpace {
+    height: 15px;
+}
+.FlexiTable--header .FlexiTableSectionVSpace.FlexiTableSectionVSpace--edge-top {
+    height: 50px;
+}
+```
+
+`FlexiTableRowVSpace` is very similar, except it's applied to the spaces inbetween normal rows. It also has `FlexiTableRowVSpace--edge-top` and `FlexiTableRowVSpace--edge-bottom` if you wanted to set the space above a row seperatly to the space below.
+
+To just set a space of 15px around all types of rows you can do the following:
+
+```css
+.FlexiTableSectionVSpace,
+.FlexiTableRowVSpace {
+    height: 15px;
+}
+```
+
+**Border around the table**
+
+To set a border around the whole table apply a style to  `.FlexiTable--border-box`. DO NOT set a border style to the `.FlexiTable--outer-box` or `.FlexiTable` the border box switches around depending on whether or not a scroll-bar is being displayed
+
+```css
+.FlexiTable--border-box {
+    border: 1px solid #d6d6d6;
+}
+```
+
+**Alternating background colors for rows (zebra-striping)**
+
+Alternating background colors can be done by using subselectors on `FlexiTableBodyRow` as follows:
+
+```css
+.FlexiTableBodyRow:nth-child(even) {
+    background-color: rgba(234,234,234,0.1);
+}
+
+.FlexiTableBodyRow:nth-child(odd) {
+  background-color: rgba(234,234,234,0.4);
+}
+```
+
+Note that header row is `FlexiTableHeaderRow`, different separate from `FlexiTableBodyRow`, and they both share `FlexiTableRow`.
+
+**Aligning column content**
+
+Assuming you have a column with name: 'Region' you could right align it by doing the following:
+
+```css
+.FlexiTable--column-Region  .FlexiTableCell {
+  text-align: right;
+}
+```
+
+This aligns both the header and body cells. If you just wanted to align the header or body use `.FlexiTableHeaderCell` or `.FlexiTableBodyCell` respectively, instead of `.FlexiTableCell`
+
+**Heading styles**
+
+The following sets a seperate background color, border and text weight for the headings (This is using sass nesting):
+
+```css
+.FlexiTableHeaderRow {
+  background-color: rgba(234,234,234,0.1);
+  border-bottom: 1px solid #d6d6d6;
+
+  .FlexiTableCell {
+    font-weight: 600;
+  }
+}
+```
+
+Note you could have used `.FlexiTableHeaderCell` in this case. It doesn't matter.
+
+**Different font-sizes for body columns**
+
+The following sets a specific font size for the 'Region' column. Only on body cells, not header cells. Using `.FlexiTableCell` instead of `.FlexiTableBodyCell` would set it on both header and body cell.
+
+```
+.FlexiTable--column-Region .FlexiTableBodyCell {
+  font-size: 17px;
+  line-height: 26px;
+}
+
+```
+
+**Overflow ellipsis**
+
+If you wish to display ellipsis instead of wrapping text that no longer fits in the column you can do the following. Note this requires that the contents of the text is within a `span`. Using the default `cellComponent` won't have a `span`.
+
+```
+.FlexiTable--column-Region  .FlexiTableBodyCell span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inherit;
+  white-space: nowrap;
+}
+```
+
+### General div/class layout:
+
+* Your `className` is at the top level div.
+* Underneath that is `FlexiTable--outer-box`.
+* At the next level we have a div with both `FlexiTable` and `FlexiTable-[uuid]` where the uuid is auto generated.
+* Under that we split things into `FlexiTable--header` and `FlexiTable--body`
+  *  `FlexiTable--header` is broken up into one or more `FlexiTableHeaderRow` (which are also  `FlexiTableRow`)
+  * `FlexiTableHeaderRow` has divs for each column with all three `FlexiTableHeaderCell--outer`, `FlexiTable--column-num-[columnNumber]`, `FlexiTable--column-[columnName]` classes
+  * `FlexiTableHeaderCell--outer` contains the spacers described below, then a div with both `FlexiTableHeaderCell` and `FlexiTableCell`
+  * Then at the next level we have the custom `headerComponent` defined in the column.
+* For the ``FlexiTable--body`
+ `FlexiTable--body` is broken up into one or more `FlexiTableBodyRow` (which are also  `FlexiTableRow`)
+  * `FlexiTableBodyRow` has divs for each column with all three of `FlexiTableBodyCell--outer`, `FlexiTable--column-num-[columnNumber]`, `FlexiTable--column-[columnName]` classes
+  * `FlexiTableBodyCell--outer` contains the spacers described below, then a div with both `FlexiTableBodyCell` and `FlexiTableCell`
+  * Then at the next level we have the custom `cellComponent` defined in the column.
+
+Between the `FlexiTableRow` and the `FlexiTableCell` for both header and body rows we have the following spacer code that is responsible for the margin/padding around each cell.
+
+* First we have a `FlexiTableSectionVSpace` or `FlexiTableRowVSpace` depending on the row position. This div creates the vertical space **above** each cell.
+* In the middle we have `FlexiTableCellSpacer--inner-row` div, which contains:
+   * Firstly a `FlexiTableColumnMargin` or `FlexiTableColumnGutter` depending on the column position. This div creates the horizontal space to the **left** of the cell.
+   * And in the middle we have `FlexiTableCell` itself.
+   * Lastly a `FlexiTableColumnMargin` or `FlexiTableColumnGutter` depending on the column position. This div creates the horizontal space to the **right** of the cell.
+* Lastly we have a `FlexiTableSectionVSpace` or `FlexiTableRowVSpace` depending on the row position. This div creates the vertical space **below** each cell.
+
+The spacing example **Spacing above & below row** a few sections above describes how you can use those spacers. 
+
+**Styling Restrictions**
+
+The following styles and attributes are managed by the FlexiTable itself. Changing them could break things. This is mostly related to column width calculations 
+* `minWidth`, `maxWidth` and `width` on anything within <FlexiTable>. If you want to set the width of the table constrain it by setting the width on a div that sourounds the <FlexiTable>.
+* `FlexiTable--measure-mode`. This is used to figure out the width of the columns. Messing with this is going to break the calculations.
+* The `box-sizing`, `display`, `flex`, `overflow` attributes. Changing any of these will seriously break the table.
+* Ignoring that go crazy. And anything within the components you define with `headerComponent` and `cellComponent` are fair game.
 
 
 ## How does it work
@@ -196,7 +324,7 @@ If the size of the table changes we just recalculate the space.
 
 FlexTable uses FlexBox to present the table.
 
-A custom uuid is created for each table so the 
+A custom uuid is created for each table so if there is multiple FlexiTables on on page, it doesn't get confused about which table it needs to calculate and manipulate styles for.
 
 ### What doesn't flexi table do?
 
@@ -248,6 +376,8 @@ ReactTable uses a number of open source projects to work properly:
 * [decimal.js-light](https://github.com/MikeMcl/decimal.js-light) - Do precisision math calculations
 * [react-measure](https://github.com/souporserious/react-measure) - Lets us know when the table is resized
 * [lodash](https://github.com/lodash/lodash) - utility functions
+
+The demo has a few more random dependencies.
 
 ### Support
 

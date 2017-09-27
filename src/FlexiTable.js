@@ -86,7 +86,6 @@ export default class FlexiTable extends React.Component {
     )
 
     this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}` , 0)
-    this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTableHeaderRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}` , 0)
     columnsWithWidths.forEach(c => {
       this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}` , 0)
     })

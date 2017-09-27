@@ -55,7 +55,7 @@ export default class FlexiTableRow extends React.Component {
     })
 
     return (
-      <div className={`FlexiTableRow FlexiTableRow--row-number-${rowNumber}`} >
+      <div className={`FlexiTableBodyRow FlexiTableRow FlexiTableRow--row-number-${rowNumber}`} >
         {cells}
       </div>
     )

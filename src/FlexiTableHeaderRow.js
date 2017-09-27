@@ -33,7 +33,7 @@ export default class FlexiTableHeaderRow extends React.Component {
     })
 
     return (
-      <div className='FlexiTableHeaderRow' >
+      <div className='FlexiTableHeaderRow FlexiTableRow' >
         {headerCells}
       </div>
     )
