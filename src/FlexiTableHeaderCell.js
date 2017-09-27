@@ -52,6 +52,7 @@ export default class FlexiTableHeaderCell extends React.Component {
         >
           <div className='FlexiTableHeaderCell FlexiTableCell'>
             <CellComponent
+              column={this.props.column}
               columnName={columnName}
               columnNumber={columnNumber}
             />

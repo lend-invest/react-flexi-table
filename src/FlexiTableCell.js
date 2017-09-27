@@ -38,7 +38,7 @@ export default class FlexiTableCell extends React.Component {
       return _get(rowData, cellDataSelector)
 
     } else if (typeof cellDataSelector === 'function') {
-      return cellDataSelector(rowData, rowNumber, columnName, columnNumber)
+      return cellDataSelector(rowData, rowNumber, columnName, columnNumber, this.props.column)
 
     } else {
       throw Error(`Unkown cellDataSelector type: ${cellDataSelector.toString()}`)
@@ -65,7 +65,14 @@ export default class FlexiTableCell extends React.Component {
 
     const cellData = this.getCellData()
     const outerCellClassName = cellClassNameSelector
-      && cellClassNameSelector({cellData, rowData, rowNumber, columnName, columnNumber})
+      && cellClassNameSelector({
+        cellData,
+        rowData,
+        rowNumber,
+        columnName,
+        columnNumber,
+        column: this.props.column,
+      })
     const CellComponent = cellComponent || FlexiTableDefaultCellComponent
 
     return (
@@ -94,6 +101,7 @@ export default class FlexiTableCell extends React.Component {
               rowNumber={rowNumber}
               rowData={rowData}
               columnName={columnName}
+              column={this.props.column}
               columnNumber={columnNumber}
             />
           </div>
