@@ -1,6 +1,6 @@
 # FlexiTable (react-flexi-table)
 
-FlexiTable is a react table component that dynamically adjust column widths to fit content and space created by the people at [lendinvest.com](http://lendinvest.com).
+FlexiTable is a react table component that dynamically adjusts column widths to fit content and space created by the people at [lendinvest.com](http://lendinvest.com).
 
 Contents:
   - Why create this project?
@@ -21,24 +21,24 @@ Contents:
 
 With most basic tables you have the following options:
   - *Make every column a fixed with*. This isn't reactive, is a pain to maintain, and can leave a lot of space unused (for instance when you have to leave enough space to fit $10,000,00 when 99% of times the amount is < $100)
-  - *Make every column a percentage*. This is reactive to a degree, but will leave a lot of white space on larger devices, and squash everything on smaller devices. It's difficult to create a consistent apperance.
+  - *Make every column a percentage*. This is reactive to a degree but will leave a lot of white space on larger devices, and squash everything on smaller devices. It's difficult to create a consistent apperance.
 
 We wanted something better. We wanted the column widths to react to their content.
 
-# High level explanation
+# High level summary
 
-To make the table and data best fit the space, this component needs to know how each column works relative to it's data. FlexiTable supports three different column types to do this.
+To make the table and data best fit the space, this component needs to know how each column works relative to its data. FlexiTable supports three different column types to do this.
 
   - **Fixed:** The simplest column type. A single fixed width. Good for columns with data that is always the same on every row. e.g. an image, a 'Delete' button, or 'edit' link.
   - **Fit To Content:** This column type changes the width of the column to fit the biggest piece of content within that content. Good for things like status codes, or numbers where you don't want to take up any more space than you need to, but the content should never wrap.
-  - **Flexi:** Flexi columns will expand or shrink to fit the available space. These are good for long pieces of text such as comments, addresses, and generally things that you are ok with wrapping over multiple lines. At least one column should be a flexi column. _This is the default_.
+  - **Flexi:** Flexi columns will expand or shrink to fit the available space. These are good for long pieces of text such as comments, addresses, and generally things that you are ok with wrapping over multiple lines. At least one column should be a flexible column. _This is the default_.
 
 
 ## Usage
 
 ### Code
 
-Please see `/demo/src/index.js` for an example.
+Please see `/demo/src/index.js` for example.
 
 #### FlexiTable
 
@@ -142,9 +142,9 @@ Either `cellDataSelector` or `cellComponent`, or both should be defined.
 | Prop | Description |
 | ------ | ------ |
 | `name`* | This is used for class names and identification.  |
-| `headerComponent`* | A react component which will displays the header for the column. It will receive props: `{ columnName, columnNumber, column }` |
+| `headerComponent`* | A react component which will display the header for the column. It will receive props: `{ columnName, columnNumber, column }` |
 | `cellDataSelector` | A string referencing the path of the data in the row (used by lodash.get), or a function to generate the cellData props used later. The function will receive arguments `(rowData, rowNumber, columnName, columnNumber, column )`. If this prop is not set, the `cellData` prop for other functions will be set to the rowData |
-| `cellComponent` | A react component which will displays the contents of the cell for the column. It will receive props: `{ cellData, rowNumber, rowData, columnName, columnNumber, column}`. If this prop is not set a FlexiTableDefaultCellComponent will be used, which just renders the cellData as is. |
+| `cellComponent` | A react component which will display the contents of the cell for the column. It will receive props: `{ cellData, rowNumber, rowData, columnName, columnNumber, column}`. If this prop is not set a FlexiTableDefaultCellComponent will be used, which just renders the cellData as is. |
 | `cellClassNameSelector` | A function that generating a classname to use for a cell. Usefull for status type columns where you might want to set the background or some feature of the cell via css. It will receive the same props as `cellComponent`, `{ cellData, rowNumber, rowData, columnName, columnNumber, column}`  |
 | `minWidth` | An integer that sets the minimum width for a column. Has no affect on fixedWidth columns.  |
 | `maxWidth` | An integer that sets the maximum width for a column. Has no affect on fixedWidth columns.  |
@@ -176,7 +176,7 @@ Specific Styling Examples:
 
 There are currently two primary classes for setting the spacing above and below rows: `FlexiTableSectionVSpace` and `FlexiTableRowVSpace`. 
 
-`FlexiTableSectionVSpace` will appear above the first row of a section and below the last row of a section, where a section is the header or body. Additionally there is `FlexiTableSectionVSpace--edge-top` and `FlexiTableSectionVSpace--edge-bottom` if you want to get more specifc. So if you wanted to make the top of the header at 50px and set the rest at 15px you could do the following:
+`FlexiTableSectionVSpace` will appear above the first row of a section and below the last row of a section, where a section is the header or body. Additionally there is `FlexiTableSectionVSpace--edge-top` and `FlexiTableSectionVSpace--edge-bottom` if you want to get more specific. So if you wanted to make the top of the header at 50px and set the rest at 15px you could do the following:
 
 ```css
 .FlexiTableSectionVSpace {
@@ -308,7 +308,7 @@ The spacing example **Spacing above & below row** a few sections above describes
 **Styling Restrictions**
 
 The following styles and attributes are managed by the FlexiTable itself. Changing them could break things. This is mostly related to column width calculations 
-* `minWidth`, `maxWidth` and `width` on anything within <FlexiTable>. If you want to set the width of the table constrain it by setting the width on a div that sourounds the <FlexiTable>.
+* `minWidth`, `maxWidth` and `width` on anything within <FlexiTable>. If you want to constrain with of table by parent DIV.
 * `FlexiTable--measure-mode`. This is used to figure out the width of the columns. Messing with this is going to break the calculations.
 * The `box-sizing`, `display`, `flex`, `overflow` attributes. Changing any of these will seriously break the table.
 * Ignoring that go crazy. And anything within the components you define with `headerComponent` and `cellComponent` are fair game.
