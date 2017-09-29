@@ -31,14 +31,14 @@ To make the table and data best fit the space, this component needs to know how 
 
   - **Fixed:** The simplest column type. A single fixed width. Good for columns with data that is always the same on every row. e.g. an image, a 'Delete' button, or 'edit' link.
   - **Fit To Content:** This column type changes the width of the column to fit the biggest piece of content within that content. Good for things like status codes, or numbers where you don't want to take up any more space than you need to, but the content should never wrap.
-  - **Flexi:** Flexi columns will expand or shrink to fit the available space. These are good for long pieces of text such as comments, addresses, and generally things that you are ok with wrapping over multiple lines. At least one column should be a flexible column. _This is the default_.
+  - **Flexi:** Flexi columns will expand or shrink to fit the available space. These are good for long pieces of text such as comments, addresses, and generally things that you are ok with wrapping over multiple lines. At least one column should be a Flexi column. _This is the default_.
 
 
 ## Usage
 
 ### Code
 
-Please see `/demo/src/index.js` for example.
+Please see example `/demo/src/index.js`.
 
 #### FlexiTable
 
@@ -308,7 +308,7 @@ The spacing example **Spacing above & below row** a few sections above describes
 **Styling Restrictions**
 
 The following styles and attributes are managed by the FlexiTable itself. Changing them could break things. This is mostly related to column width calculations 
-* `minWidth`, `maxWidth` and `width` on anything within <FlexiTable>. If you want to constrain with of table by parent DIV.
+* `minWidth`, `maxWidth` and `width` on anything within <FlexiTable>. If you want to set the width of the table so that is constrained, set the width on a div that sourounds the <FlexiTable>.
 * `FlexiTable--measure-mode`. This is used to figure out the width of the columns. Messing with this is going to break the calculations.
 * The `box-sizing`, `display`, `flex`, `overflow` attributes. Changing any of these will seriously break the table.
 * Ignoring that go crazy. And anything within the components you define with `headerComponent` and `cellComponent` are fair game.
