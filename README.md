@@ -373,7 +373,7 @@ ReactTable uses a number of open source projects to work properly:
 
 * [React](https://facebook.github.io/react/) - It is a **react**-flex-table after all
 * [classnames](https://github.com/JedWatson/classnames) -  A simple JavaScript utility for joining classNames together.
-* [decimal.js-light](https://github.com/MikeMcl/decimal.js-light) - Do precisision math calculations
+* [decimal.js-light](https://github.com/MikeMcl/decimal.js-light) - Do precision math calculations
 * [react-measure](https://github.com/souporserious/react-measure) - Lets us know when the table is resized
 * [lodash](https://github.com/lodash/lodash) - utility functions
 
@@ -387,7 +387,7 @@ Tested against the latest versions of: Chrome, Firefox, Safari & (iOS 10+), Edge
 
 Currently, as this project has not been published to npm, installation requires referencing the github project directly. This will all change when we begin to publish in NPM.
 
-Add the following dependancy to your packages:
+Add the following dependency to your packages:
 
 ```
 "react-flexi-table": "git+https://[private-key-here]:x-oauth-basic@github.com/lend-invest/react-flexi-table.git#[commit to target here]",
