@@ -51,6 +51,7 @@ You can define a felxitable in jsx as follows.
       data={tableData}
       halfGutterWidth={25}
       marginWidth={20}
+      rowLimit={50}
     />
 ```
 
@@ -63,6 +64,7 @@ All the props with a * are required.
 | `data`* | An array of objects, each item representing a row of data to display. There's no restrictions here, except that your column definitions know how to handle them. If this changes the table column sizing will be recalculated. |
 | `halfGutterWidth`* | Size in px of half a gutter. The inside padding for each cell in other words. The distance between two cells will be `halfGutterWidth * 2`. |
 | `marginWidth`* | Size in px of the margin to the left and right of the table. |
+| `rowLimit` | The table will only show and calculate for the given amount of rows. |
 
 Note that `halfGutterWidth` and `marginWidth` are just defining horizontal width. Vertical height should be defined with css styles, that will be covered in the *Guide to styling* section. We needed to define the horizontal gutters and margins here so the column calculations correctly know how much free space to allocate.
 
@@ -335,6 +337,12 @@ A custom uuid is created for each table so if there is multiple FlexiTables on o
 * **Aggregate rows (GroupBy headers + Footers)** - We would be interested in adding this, but have no immediate plans to.
 * **Fixed Table Height with vertical scroll** - We have no current plans to do this, but it would be a good feature to have.
 
+### Dont's!
+
+* DON'T filter or map the rows in your render method. FlexiTable doesn't do a deep comparison, and will think the data has changed every render. It will recalculate the size of the table, killing performance.
+* DON'T filter or map the columns in your render method. FlexiTable doesn't do a deep comparison, and will think the column definitions have changed every render. It will recalculate the size of the table, killing performance.
+* DON'T put the FlexiTable in a container that grows fit it's contents. The flexi table will try to grow to fit it's container, and if the container is growing with it the FlexiTable won't stop growing until it reaches all of its column's maxWidths.
+
 ### Known Issues:
 
 * When the FlexiTable does a test render to gather the width of the each cell it will render every cell in the table. If the table has 50,000 rows, it will render all of them. We should limit this by default to say 50 rows, and provide an option to set that number.
@@ -473,6 +481,7 @@ To build the library do the following:
 ```sh
 $ yarn build
 $ cp src/FlexiTable.scss lib/
+$ cp src/FlexiTable.scss es/
 ```
 
 In the future we expect to make the build and publish process automated.

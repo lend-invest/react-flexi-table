@@ -2,6 +2,8 @@ import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
+import _take from 'lodash/take'
+import _isNumber from 'lodash/isNumber'
 import Measure from 'react-measure'
 import FlexiTableRow from './FlexiTableRow'
 import FlexiTableHeaderRow from './FlexiTableHeaderRow'
@@ -23,6 +25,7 @@ export default class FlexiTable extends React.Component {
     data: PropTypes.array,
     halfGutterWidth: PropTypes.number,
     marginWidth: PropTypes.number,
+    rowLimit: PropTypes.number,
   }
 
   static defaultProps = {
@@ -115,7 +118,9 @@ export default class FlexiTable extends React.Component {
     if (
       this.props.columns !== nextProps.columns ||
       this.props.halfGutterWidth !== nextProps.halfGutterWidth ||
-      this.props.marginWidth !== nextProps.marginWidth
+      this.props.marginWidth !== nextProps.marginWidth ||
+      this.props.rowLimit !== nextProps.rowLimit
+
     ) {
       // columns have changed, we need to re-gather widths and recalculate
       this.setStartState()
@@ -197,6 +202,7 @@ export default class FlexiTable extends React.Component {
   renderContents = (columns, isInMeasureMode) => {
     const {
       data,
+      rowLimit,
       halfGutterWidth,
       marginWidth,
       className,
@@ -211,7 +217,12 @@ export default class FlexiTable extends React.Component {
       />
     )
 
-    const rows = data.map((x, i) => {
+    let limitedData = data
+    if (_isNumber(rowLimit)) {
+      limitedData = _take(data, rowLimit)
+    }
+
+    const rows = limitedData.map((x, i) => {
       return (
         <FlexiTableRow
           key={i}
