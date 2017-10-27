@@ -66,9 +66,7 @@ export default class FlexiTable extends React.Component {
 
   clearSizeStyles = () => {
     if (this.tableStyle) {
-      while (this.tableStyle.sheet.cssRules.length) {
-        this.tableStyle.sheet.deleteRule(0)
-      }
+      this.tableStyle.innerText = ''
     }
   }
 
@@ -88,10 +86,11 @@ export default class FlexiTable extends React.Component {
       halfGutterWidth
     )
 
-    this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}` , 0)
+    let styles = `.FlexiTable-${this.uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}`
     columnsWithWidths.forEach(c => {
-      this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}` , 0)
+      styles += ` .FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}`
     })
+    this.tableStyle.innerText = styles
   }
 
   setStartState = () => {
@@ -217,7 +216,7 @@ export default class FlexiTable extends React.Component {
       />
     )
 
-    let limitedData = data
+    let limitedData = data || []
     if (_isNumber(rowLimit)) {
       limitedData = _take(data, rowLimit)
     }
@@ -253,6 +252,14 @@ export default class FlexiTable extends React.Component {
       && this.state.measuredTableWidth < rowWidth
     const overflowStyle = overflowX ? { overflowX: 'scroll' } : {}
 
+    let measureModeStyle = {}
+    if (isInMeasureMode && this.tableRef) {
+      // The height shouldn't shrink when we switch to measure-mode,
+      // otherwise it can mess with the scroll position on the page
+      // if the table is near the bottom
+      measureModeStyle.minHeight = this.tableRef.clientHeight;
+    }
+
     return (
       <Measure
         bounds
@@ -272,6 +279,7 @@ export default class FlexiTable extends React.Component {
                   'FlexiTable--measure-mode': isInMeasureMode,
                   'FlexiTable--border-box': !overflowX
                 })}
+                style={measureModeStyle}
               >
                 <div className='FlexiTable--header'>
                   {headerRow}

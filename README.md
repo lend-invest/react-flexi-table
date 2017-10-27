@@ -393,21 +393,11 @@ Tested against the latest versions of: Chrome, Firefox, Safari & (iOS 10+), Edge
 
 ### Installation
 
-Currently, as this project has not been published to npm, installation requires referencing the github project directly. This will all change when we begin to publish in NPM.
 
-Add the following dependency to your packages:
+Add your package from npm:
 
 ```
-"react-flexi-table": "git+https://[private-key-here]:x-oauth-basic@github.com/lend-invest/react-flexi-table.git#[commit to target here]",
-```
-
-Then add the path to your babel loaders:
-
-```javascript
-include: [
-  paths.appSrc,
-  path.resolve(__dirname, '../node_modules/react-flexi-table'),
-],
+> yarn add react-flexi-table
 ```
 
 FlexiTable uses sass for it's basic styling. If your using webpack you'll need to add 'node-sass' and 'sass-loader' to your package dev-dependencies.
@@ -444,10 +434,10 @@ Or for Webpack 2 you'll want to include the loader as part of your webpack build
   }
 ```
 
-Finally after doing a yarn install (or npm install) you can load the project via the full path. 
+Finally after doing a yarn install (or npm install) you can load the project via the package. 
 
 ```
-import FlexiTable from 'react-flexi-table/lib/index'
+import FlexiTable from 'react-flexi-table'
 ```
 
 
