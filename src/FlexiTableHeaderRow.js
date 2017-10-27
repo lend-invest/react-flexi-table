@@ -9,6 +9,14 @@ export default class FlexiTableHeaderRow extends React.Component {
     marginWidth: PropTypes.number.isRequired,
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.props.columns !== nextProps.columns ||
+      this.props.halfGutterWidth !== nextProps.halfGutterWidth ||
+      this.props.marginWidth !== nextProps.marginWidth
+    )
+  }
+
   render () {
     const {
       columns,
