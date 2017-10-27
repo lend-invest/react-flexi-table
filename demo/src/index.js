@@ -20,13 +20,256 @@ function DateValue(props) {
 class Demo extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = { tableData: this.buildDataTable() }
   }
 
-  render () {
-
+  buildDataTable = () => {
     // Example  table data
-    const tableData = [{
+    return [{
+      customer: {
+        firstName: 'John',
+        lastName: 'Smith',
+        postCode: 'N1 1CC',
+        region: 'London'
+      },
+      account: {
+        id: 'P-122334',
+        signupDate: '2017-02-24',
+        lifetimeValue: { currency: 'GBP', amount: '830.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-26',
+        nextPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        lastPaymentDate: '2017-06-20',
+        lastPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Margery',
+        lastName: 'Knotswood',
+        postCode: 'KT3 3AB',
+        region: 'Sutton-under-Whitestonecliffe'
+      },
+      account: {
+        id: 'P-K34212',
+        signupDate: '2012-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '12004.50' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-06-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Christopher',
+        lastName: 'Dianetasmark',
+        postCode: 'KT3 3AB',
+        region: 'Kent'
+      },
+      account: {
+        id: 'A-948121',
+        signupDate: '2015-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '1689.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-04-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Overdue',
+        overdueAmount:  { currency: 'GBP', amount: '177.00' },
+        comment: 'This customer is consistently late with payments and can be difficult to contact.'
+      },
+    }, {
+      customer: {
+        firstName: 'John',
+        lastName: 'Smith',
+        postCode: 'N1 1CC',
+        region: 'London'
+      },
+      account: {
+        id: 'P-122334',
+        signupDate: '2017-02-24',
+        lifetimeValue: { currency: 'GBP', amount: '830.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-26',
+        nextPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        lastPaymentDate: '2017-06-20',
+        lastPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Margery',
+        lastName: 'Knotswood',
+        postCode: 'KT3 3AB',
+        region: 'Sutton-under-Whitestonecliffe'
+      },
+      account: {
+        id: 'P-K34212',
+        signupDate: '2012-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '12004.50' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-06-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Christopher',
+        lastName: 'Dianetasmark',
+        postCode: 'KT3 3AB',
+        region: 'Kent'
+      },
+      account: {
+        id: 'A-948121',
+        signupDate: '2015-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '1689.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-04-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Overdue',
+        overdueAmount:  { currency: 'GBP', amount: '177.00' },
+        comment: 'This customer is consistently late with payments and can be difficult to contact.'
+      },
+    }, {
+      customer: {
+        firstName: 'John',
+        lastName: 'Smith',
+        postCode: 'N1 1CC',
+        region: 'London'
+      },
+      account: {
+        id: 'P-122334',
+        signupDate: '2017-02-24',
+        lifetimeValue: { currency: 'GBP', amount: '830.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-26',
+        nextPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        lastPaymentDate: '2017-06-20',
+        lastPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Margery',
+        lastName: 'Knotswood',
+        postCode: 'KT3 3AB',
+        region: 'Sutton-under-Whitestonecliffe'
+      },
+      account: {
+        id: 'P-K34212',
+        signupDate: '2012-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '12004.50' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-06-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Christopher',
+        lastName: 'Dianetasmark',
+        postCode: 'KT3 3AB',
+        region: 'Kent'
+      },
+      account: {
+        id: 'A-948121',
+        signupDate: '2015-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '1689.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-04-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Overdue',
+        overdueAmount:  { currency: 'GBP', amount: '177.00' },
+        comment: 'This customer is consistently late with payments and can be difficult to contact.'
+      },
+    }, {
+      customer: {
+        firstName: 'John',
+        lastName: 'Smith',
+        postCode: 'N1 1CC',
+        region: 'London'
+      },
+      account: {
+        id: 'P-122334',
+        signupDate: '2017-02-24',
+        lifetimeValue: { currency: 'GBP', amount: '830.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-26',
+        nextPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        lastPaymentDate: '2017-06-20',
+        lastPaymentAmount: { currency: 'GBP', amount: '79.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Margery',
+        lastName: 'Knotswood',
+        postCode: 'KT3 3AB',
+        region: 'Sutton-under-Whitestonecliffe'
+      },
+      account: {
+        id: 'P-K34212',
+        signupDate: '2012-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '12004.50' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-06-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Up to date',
+        comment: ''
+      },
+    }, {
+      customer: {
+        firstName: 'Christopher',
+        lastName: 'Dianetasmark',
+        postCode: 'KT3 3AB',
+        region: 'Kent'
+      },
+      account: {
+        id: 'A-948121',
+        signupDate: '2015-06-04',
+        lifetimeValue: { currency: 'GBP', amount: '1689.00' },
+      },
+      subscription: {
+        nextPaymentDate: '2017-07-15',
+        nextPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        lastPaymentDate: '2017-04-15',
+        lastPaymentAmount: { currency: 'GBP', amount: '59.00' },
+        status: 'Overdue',
+        overdueAmount:  { currency: 'GBP', amount: '177.00' },
+        comment: 'This customer is consistently late with payments and can be difficult to contact.'
+      },
+    }, {
       customer: {
         firstName: 'John',
         lastName: 'Smith',
@@ -88,7 +331,15 @@ class Demo extends Component {
         comment: 'This customer is consistently late with payments and can be difficult to contact.'
       },
     }]
+  }
 
+
+  reloadTable = (e) => {
+    e.preventDefault()
+    this.setState({ tableData: this.buildDataTable() })
+  }
+
+  render () {
 
     const tableColumns = [{
       // name is just used for css classes and things, it's just an identifier
@@ -182,10 +433,11 @@ class Demo extends Component {
         <FlexiTable
           className="DemoTable"
           columns={tableColumns}
-          data={tableData}
+          data={this.state.tableData}
           halfGutterWidth={25}
           marginWidth={20}
         />
+        <a href="" onClick={this.reloadTable}>Reload Data</a>
       </div>
     )
   }

@@ -217,7 +217,7 @@ export default class FlexiTable extends React.Component {
       />
     )
 
-    let limitedData = data
+    let limitedData = data || []
     if (_isNumber(rowLimit)) {
       limitedData = _take(data, rowLimit)
     }
@@ -253,6 +253,14 @@ export default class FlexiTable extends React.Component {
       && this.state.measuredTableWidth < rowWidth
     const overflowStyle = overflowX ? { overflowX: 'scroll' } : {}
 
+    let measureModeStyle = {}
+    if (isInMeasureMode && this.tableRef) {
+      // The height shouldn't shrink when we switch to measure-mode,
+      // otherwise it can mess with the scroll position on the page
+      // if the table is near the bottom
+      measureModeStyle.minHeight = this.tableRef.clientHeight;
+    }
+
     return (
       <Measure
         bounds
@@ -272,6 +280,7 @@ export default class FlexiTable extends React.Component {
                   'FlexiTable--measure-mode': isInMeasureMode,
                   'FlexiTable--border-box': !overflowX
                 })}
+                style={measureModeStyle}
               >
                 <div className='FlexiTable--header'>
                   {headerRow}
