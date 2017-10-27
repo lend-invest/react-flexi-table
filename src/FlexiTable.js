@@ -66,9 +66,7 @@ export default class FlexiTable extends React.Component {
 
   clearSizeStyles = () => {
     if (this.tableStyle) {
-      while (this.tableStyle.sheet.cssRules.length) {
-        this.tableStyle.sheet.deleteRule(0)
-      }
+      this.tableStyle.innerText = ''
     }
   }
 
@@ -88,10 +86,11 @@ export default class FlexiTable extends React.Component {
       halfGutterWidth
     )
 
-    this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}` , 0)
+    let styles = `.FlexiTable-${this.uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}`
     columnsWithWidths.forEach(c => {
-      this.tableStyle.sheet.insertRule(`.FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}` , 0)
+      styles += ` .FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}`
     })
+    this.tableStyle.innerText = styles
   }
 
   setStartState = () => {
