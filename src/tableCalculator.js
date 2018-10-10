@@ -215,10 +215,14 @@ export function distributeDecimals(floats) {
     //just get the fractional parts 
     let max = _maxBy(fractionalParts, x => x.value.toNumber())
 
+    const fractionalPartsMinusMax = fractionalParts.filter(x => x.index !== max.index);
+
     //only deal with min if we don't already have a remainder
     let minValue = new Decimal(0)
     if (remainder.minus(EPSILON).lte(0)) {
-      const min = _minBy(fractionalParts, x => x.value.toNumber())
+      var min = fractionalPartsMinusMax.length > 1 ?
+        _minBy(fractionalPartsMinusMax, x => x.value.toNumber())
+        : fractionalPartsMinusMax[0];
       minValue = min.value
       // remove the fractional part from the min value, add it to the results
       const newMinValue = valuesByIndex[min.index].todp(0, Decimal.ROUND_FLOOR)
