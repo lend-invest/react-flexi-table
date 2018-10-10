@@ -1,0 +1,90 @@
+
+// box used for measurements and borders when overflowing
+.FlexiTable--outer-box {
+}
+
+.FlexiTable {
+  box-sizing: border-box;
+  display: inline-block; //inline-block so it can shrink when max-width < available width
+}
+
+// When in measure mode we remove all restrictions on the cell sizes
+// to let them grow as large as possible. That way we can measure the
+// full extent of the content
+.FlexiTable.FlexiTable--measure-mode {
+  display: inherit;
+
+  .FlexiTableCell--outer, .FlexiTableHeaderCell--outer {
+    display: inherit;
+    flex: inherit;
+    flex-flow: inherit;
+    visibility: hidden;
+
+    > div {
+      display: inherit;
+      flex: inherit;
+      flex-flow: inherit;
+      // don't let one extra-wide column break all the others
+      max-width: 1000px;
+    }
+  }
+
+  .FlexiTable--body, .FlexiTable--header {
+    // extra wide in measure mode to fit all the content to their full extent
+    width: 10000px;
+  }
+}
+
+.FlexiTableRow, .FlexiTableHeaderRow {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.FlexiTableCell--outer, .FlexiTableHeaderCell--outer {
+  box-sizing: border-box;
+  flex-flow: row nowrap;
+  flex: 0 0 0;
+  word-break: break-word;
+
+  > div {
+    display: flex;
+    box-sizing: border-box;
+    flex-flow: column nowrap;
+  }
+}
+
+.FlexiTableCellSpacer--inner-row {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row nowrap;
+  flex: 1 0 auto;
+}
+
+.FlexiTableCell {
+  box-sizing: border-box;
+  width: 100%;
+  display: inline-block;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.FlexiTableSectionVSpace {
+  display: flex;
+  height: 8px;
+}
+
+.FlexiTableRowVSpace {
+  display: flex;
+  height: 6px;
+}
+
+.FlexiTableColumnMargin {
+  display: flex;
+}
+
+.FlexiTableColumnGutter {
+  flex: 1 1 auto;
+  display: flex;
+}
+
