@@ -584,7 +584,7 @@ describe('with distributeDecimals', () => {
     expect(_sum(result)).toEqual(fixEpsilonErrorOrFloor(_sum(input)))
   })
 
-  it('should distribute large unique list correctly', () => {
+  it('should distribute same fractions correctly', () => {
     const input = [541.5, 142.5]
     const result = distributeDecimals(input)
     expect(result).toEqual([542, 142])
