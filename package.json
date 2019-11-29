@@ -15,7 +15,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component",
+    "build": "nwb build-react-component --copy-files",
     "clean": "nwb clean-module && nwb clean-demo",
     "start": "nwb serve-react-demo",
     "test": "jest --no-cache"
@@ -36,8 +36,8 @@
     "jest": "^21.2.0",
     "lodash": "^4.0",
     "moment": "^2.18.1",
-    "nwb": "0.18.x",
-    "nwb-sass": "^0.8.1",
+    "nwb": "0.23.x",
+    "nwb-sass": "^0.9.0",
     "prop-types": "^15.5.10",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
