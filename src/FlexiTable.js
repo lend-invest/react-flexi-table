@@ -113,7 +113,7 @@ export default class FlexiTable extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       this.props.columns !== nextProps.columns ||
       this.props.halfGutterWidth !== nextProps.halfGutterWidth ||
@@ -130,7 +130,7 @@ export default class FlexiTable extends React.Component {
     }
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  UNSAFE_componentWillUpdate(nextProps, nextState) {
     if (!this.state.hasCalculatedFlexColumns && nextState.hasCalculatedFlexColumns) {
       // if we just calculated the column widths, update them
       this.updateSizeStyles(nextState.calcColumnWidths)
