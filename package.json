@@ -1,6 +1,6 @@
 {
   "name": "react-flexi-table",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "React table component that dynamically adjusts column widths to fit content.",
   "author": "LendInvest (lendinvest.com)",
   "license": "MIT",
