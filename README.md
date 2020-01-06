@@ -457,19 +457,19 @@ $ npm install -g nwb
 Next install the dependencies: 
 
 ```sh
-$ yarn install
+$ npm install
 ```
 
 Now you can start the demo, build the library excetera. Type the following to start the demo:
 
 ```sh
-$ yarn start
+$ npm start
 ```
 
 To build the library do the following:
 
 ```sh
-$ yarn build
+$ npm build
 $ cp src/FlexiTable.scss lib/
 $ cp src/FlexiTable.scss es/
 ```
