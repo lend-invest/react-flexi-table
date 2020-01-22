@@ -21,6 +21,7 @@ function generateUuid() {
 
 const FlexiTable = (props) => {
   const uuid = generateUuid();
+  const { columns } = props;
   const [hasRenderedTestFlexColumns, setHasRenderedTestFlexColumns] = useState(false)
   const [hasMeasuredTestColumns, setHasMeasuredTestColumns] = useState(false)
   const [hasCalculatedFlexColumns, setHasCalculatedFlexColumns] = useState(false)
