@@ -28,6 +28,7 @@
   "peerDependencies": {
     "react": "16.x"
   },
+  "postinstall": "npm run build",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-jest": "^21.2.0",

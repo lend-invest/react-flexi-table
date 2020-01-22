@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import _map from 'lodash/map'
@@ -19,60 +19,43 @@ function generateUuid() {
   return (function b(a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,b)})()
 }
 
-export default class FlexiTable extends React.Component {
-  static propTypes = {
-    columns: PropTypes.array,
-    data: PropTypes.array,
-    halfGutterWidth: PropTypes.number,
-    marginWidth: PropTypes.number,
-    rowLimit: PropTypes.number,
-  }
+const FlexiTable = (props) => {
+  const uuid = generateUuid();
+  const [hasRenderedTestFlexColumns, setHasRenderedTestFlexColumns] = useState(false)
+  const [hasMeasuredTestColumns, setHasMeasuredTestColumns] = useState(false)
+  const [hasCalculatedFlexColumns, setHasCalculatedFlexColumns] = useState(false)
+  const [calcColumnWidths, setCalcColumnWidths] = useState(null)
+  const [gatheredWidthData, setGatheredWidthData] = useState(null)
+  const [measuredTableWidth, setMeasuredTableWidth] = useState(null)
 
-  static defaultProps = {
-    halfGutterWidth: 25,
-    marginWidth: 20,
-  }
+  let tableStyle;
+  let tableRef;
 
-  constructor(props) {
-    super(props)
-    this.uuid = generateUuid()
-    this.state = {
-      hasRenderedTestFlexColumns: false,
-      hasMeasuredTestColumns: false,
-      hasCalculatedFlexColumns: false,
-      calcColumnWidths: null,
+  const clearSizeStyles = () => {
+    if (tableStyle) {
+      tableStyle.innerText = ''
     }
   }
 
-  componentDidMount() {
-    this.tableStyle = document.createElement('style')
-    document.head.appendChild(this.tableStyle)
-
-    if (this.tableRef) {
-      this.setStartState()
+  const setStartState = () => {
+    clearSizeStyles()
+    const dynamicColumns = props.columns.filter(x => x.fixedWidth == null)
+    
+    //if all the columns have a fixed width, then don't bother calculating
+    if (dynamicColumns.length === 0) {
+      setHasRenderedTestFlexColumns(true)
+      setHasMeasuredTestColumns(true)
+      setHasCalculatedFlexColumns(true)
+    } else {
+      setHasRenderedTestFlexColumns(true)
+      setHasMeasuredTestColumns(false)
+      setHasCalculatedFlexColumns(false)
     }
   }
 
-  componentWillUnmount() {
-    if (this.tableStyle) {
-      document.head.removeChild(this.tableStyle)
-    }
-  }
-
-  // Note: rather than passing widths down to each react component when we
-  // change the calculated widths we just update a stylesheet. This has a
-  // big perf improvement becuase react doesn't need to re-render every
-  // cell.
-
-  clearSizeStyles = () => {
-    if (this.tableStyle) {
-      this.tableStyle.innerText = ''
-    }
-  }
-
-  updateSizeStyles = (calcColumnWidths) => {
-    this.clearSizeStyles()
-    const { columns, marginWidth, halfGutterWidth } = this.props
+  const updateSizeStyles = (calcColumnWidths) => {
+    clearSizeStyles()
+    const { columns, marginWidth, halfGutterWidth } = props
 
     // extend the column data with our calculated widths
     const columnsWithWidths = columns.map(c => ({
@@ -86,127 +69,42 @@ export default class FlexiTable extends React.Component {
       halfGutterWidth
     )
 
-    let styles = `.FlexiTable-${this.uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}`
+    let styles = `.FlexiTable-${uuid} .FlexiTableRow { min-width: ${rowWidth}px; max-width: ${rowWidth}px; width: ${rowWidth}px;}`
     columnsWithWidths.forEach(c => {
-      styles += ` .FlexiTable-${this.uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}`
+      styles += ` .FlexiTable-${uuid} .FlexiTable--column-${c.name} .FlexiTableCell { min-width: ${c.width}px; max-width: ${c.width}px; width: ${c.width}px;}`
     })
-    this.tableStyle.innerText = styles
+    tableStyle.innerText = styles
   }
 
-  setStartState = () => {
-    this.clearSizeStyles()
-    const dynamicColumns = this.props.columns.filter(x => x.fixedWidth == null)
-    
-    //if all the columns have a fixed width, then don't bother calculating
-    if (dynamicColumns.length === 0) {
-      this.setState({
-        hasRenderedTestFlexColumns: true,
-        hasMeasuredTestColumns: true,
-        hasCalculatedFlexColumns: true,
-      })
-    } else {
-      this.setState({
-        hasRenderedTestFlexColumns: true,
-        hasMeasuredTestColumns: false,
-        hasCalculatedFlexColumns: false,
-      })
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (
-      this.props.columns !== nextProps.columns ||
-      this.props.halfGutterWidth !== nextProps.halfGutterWidth ||
-      this.props.marginWidth !== nextProps.marginWidth ||
-      this.props.rowLimit !== nextProps.rowLimit
-
-    ) {
-      // columns have changed, we need to re-gather widths and recalculate
-      this.setStartState()
-
-    } else if (this.props.data !== nextProps.data) {
-      // data has changed, we need to re-gather widths and recalculate
-      this.setStartState()
-    }
-  }
-
-  UNSAFE_componentWillUpdate(nextProps, nextState) {
-    if (!this.state.hasCalculatedFlexColumns && nextState.hasCalculatedFlexColumns) {
-      // if we just calculated the column widths, update them
-      this.updateSizeStyles(nextState.calcColumnWidths)
-    }
-  }
-
-  componentDidUpdate() {
-    const {
-      hasRenderedTestFlexColumns,
-      hasMeasuredTestColumns,
-      hasCalculatedFlexColumns,
-    } = this.state
-
-    if (this.tableRef && !hasRenderedTestFlexColumns) {
-      this.setStartState()
-
-    } else if (hasRenderedTestFlexColumns && !hasMeasuredTestColumns) {
-      const dynamicColumns = this.props.columns.filter(x => x.fixedWidth == null)
-      const gatheredWidthData = buildWidthData(dynamicColumns, this.getColumnCellWidths)
-      this.setState({
-        hasMeasuredTestColumns: true,
-        hasCalculatedFlexColumns: false,
-        gatheredWidthData,
-      })
-
-    } else if (hasMeasuredTestColumns && !hasCalculatedFlexColumns) {
-      const tableWidth = this.tableRef.clientWidth
-      const calcColumnWidths = calculateColumnsWidths(
-        this.props.columns,
-        this.state.gatheredWidthData,
-        this.props.marginWidth,
-        this.props.halfGutterWidth,
-        tableWidth,
-      )
-
-      this.setState({
-        hasCalculatedFlexColumns: true,
-        calcColumnWidths,
-        measuredTableWidth: tableWidth
-      })
-    }
-  }
-
-
-  handleResize = (contentRect) => {
-    if (!this.state.hasCalculatedFlexColumns) {
-      //ignore the change if we haven't yet calcluated the flex columns, it's to be expected
-
-    } else if (contentRect.bounds.width !== this.state.measuredTableWidth)  {
-      // we need to recalculate columns
-      this.setState({
-        hasCalculatedFlexColumns: false
-      })
-    }
-  }
-
-  getColumnCellWidths = (columnName) => {
+  const getColumnCellWidths = (columnName) => {
     // Unless the user has set some odd styles the flex styles when
     // isInMeasureMode = true should have caused each cell to grow to the
     // maximum width. Now we just need to go through them all and collect
     // the data.
     const cellSelector = `.FlexiTable-${this.uuid} .FlexiTable--column-${columnName} .FlexiTableCell`
-    const cells = this.tableRef.querySelectorAll(cellSelector)
+    const cells = tableRef.querySelectorAll(cellSelector)
     const result = _map(cells, x => x.scrollWidth)
     return result
   }
 
-  renderContents = (columns, isInMeasureMode) => {
+  const handleResize = (contentRect) => {
+    if (!hasCalculatedFlexColumns) {
+      //ignore the change if we haven't yet calcluated the flex columns, it's to be expected
+
+    } else if (contentRect.bounds.width !== measuredTableWidth)  {
+      // we need to recalculate columns
+      setHasCalculatedFlexColumns(false)
+    }
+  }
+
+  const renderContents = (columns, isInMeasureMode) => {
     const {
       data,
       rowLimit,
       halfGutterWidth,
       marginWidth,
       className,
-    } = this.props
-    const { calcColumnWidths } = this.state
+    } = props
 
     const headerRow = (
       <FlexiTableHeaderRow
@@ -248,22 +146,22 @@ export default class FlexiTable extends React.Component {
     }
 
     const overflowX = rowWidth != null
-      && this.state.measuredTableWidth != null
-      && this.state.measuredTableWidth < rowWidth
+      && measuredTableWidth != null
+      && measuredTableWidth < rowWidth
     const overflowStyle = overflowX ? { overflowX: 'scroll' } : {}
 
     let measureModeStyle = {}
-    if (isInMeasureMode && this.tableRef) {
+    if (isInMeasureMode && tableRef) {
       // The height shouldn't shrink when we switch to measure-mode,
       // otherwise it can mess with the scroll position on the page
       // if the table is near the bottom
-      measureModeStyle.minHeight = this.tableRef.clientHeight;
+      measureModeStyle.minHeight = tableRef.clientHeight;
     }
 
     return (
       <Measure
         bounds
-        onResize={this.handleResize}
+        onResize={handleResize}
       >
         {({ measureRef }) =>
           <div ref={measureRef} className={className}>
@@ -271,11 +169,11 @@ export default class FlexiTable extends React.Component {
               className={classnames('FlexiTable--outer-box', {
                 'FlexiTable--border-box': overflowX
               })}
-              ref={el => {this.tableRef = el}}
+              ref={el => {tableRef = el}}
               style={overflowStyle}
             >
               <div
-                className={classnames('FlexiTable', `FlexiTable-${this.uuid}`, {
+                className={classnames('FlexiTable', `FlexiTable-${uuid}`, {
                   'FlexiTable--measure-mode': isInMeasureMode,
                   'FlexiTable--border-box': !overflowX
                 })}
@@ -295,18 +193,86 @@ export default class FlexiTable extends React.Component {
     )
   }
 
-  render() {
-    const { columns } = this.props
-
-    if (!this.state.hasRenderedTestFlexColumns || !this.state.hasMeasuredTestColumns) {
-      //render in a measure mode to calculate columns
-      const dynamicColumns = columns.filter(x => x.fixedWidth == null)
-      //if all columns are a fixed size, we don't need to do a measure render
-      if (dynamicColumns.length) {
-        return this.renderContents(dynamicColumns, true)
-      }
+  // componentDidMount
+  useEffect(() => {
+    tableStyle = document.createElement('style');
+    document.head.appendChild(tableStyle)
+    if (tableRef) {
+      setStartState()
     }
 
-    return this.renderContents(columns, false)
+    return () => {
+      if (tableStyle) {
+        document.head.removeChild(tableStyle)
+      }
+    }
+  }, [])
+
+  // componentWillReceiveProps
+  useEffect(() => {
+    setStartState()
+
+  }, [props.columns, props.halfGutterWidth, props.marginWidth, props.rowLimit, props.data])
+
+  // componentWillUpdate
+  useEffect(() => {
+    updateSizeStyles(calcColumnWidths)
+
+  }, [calcColumnWidths, hasCalculatedFlexColumns])
+
+  // componentDidUpdate
+  useEffect(() => {
+
+    if (tableRef && !hasRenderedTestFlexColumns) {
+      setStartState()
+
+    } else if (hasRenderedTestFlexColumns && !hasMeasuredTestColumns) {
+      const dynamicColumns = props.columns.filter(x => x.fixedWidth == null)
+      const gatheredWidthData = buildWidthData(dynamicColumns, getColumnCellWidths)
+      setHasRenderedTestFlexColumns(true)
+      setHasCalculatedFlexColumns(false)
+      setGatheredWidthData(gatheredWidthData)
+
+    } else if (hasMeasuredTestColumns && !hasCalculatedFlexColumns) {
+      const tableWidth = tableRef.clientWidth
+      const calcColumnWidths = calculateColumnsWidths(
+        props.columns,
+        gatheredWidthData,
+        props.marginWidth,
+        props.halfGutterWidth,
+        tableWidth,
+      )
+
+      setHasCalculatedFlexColumns(true)
+      setCalcColumnWidths(calcColumnWidths)
+      setMeasuredTableWidth(tableWidth)
+
+    }
+
+  }, [columns])
+
+  if (!hasRenderedTestFlexColumns || !hasMeasuredTestColumns) {
+    //render in a measure mode to calculate columns
+    const dynamicColumns = columns.filter(x => x.fixedWidth == null)
+    //if all columns are a fixed size, we don't need to do a measure render
+    if (dynamicColumns.length) {
+      return renderContents(dynamicColumns, true)
+    }
   }
+
+  return renderContents(columns, false)
+ 
+}
+
+FlexiTable.defaultProps = {
+  halfGutterWidth: 25,
+    marginWidth: 20,
+}
+
+FlexiTable.propTypes = {
+  columns: PropTypes.array,
+    data: PropTypes.array,
+    halfGutterWidth: PropTypes.number,
+    marginWidth: PropTypes.number,
+    rowLimit: PropTypes.number,
 }
