@@ -300,3 +300,5 @@ FlexiTable.propTypes = process.env.NODE_ENV !== "production" ? {
   marginWidth: PropTypes.number,
   rowLimit: PropTypes.number
 } : {};
+
+export default FlexiTable;
