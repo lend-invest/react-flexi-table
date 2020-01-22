@@ -276,3 +276,5 @@ FlexiTable.propTypes = {
     marginWidth: PropTypes.number,
     rowLimit: PropTypes.number,
 }
+
+export default FlexiTable;
