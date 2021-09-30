@@ -1,5 +1,8 @@
-# FlexiTable (react-flexi-table)
+# ⚠️ Deprecated ⚠️
+This repository is no longer supported, please consider using alternatives, like [react-data-grid](http://adazzle.github.io/react-data-grid/) or [React Table](https://react-table.tanstack.com/). 
+<br/><br/><br/><br/>
 
+# FlexiTable (react-flexi-table)
 FlexiTable is a react table component that dynamically adjust column widths to fit content and space created by the people at [lendinvest.com](http://lendinvest.com).
 
 Contents:
@@ -366,14 +369,6 @@ A: Good question. There are a few reasons.
 * It makes it easier to define spacing via styles. i.e. for the first or last row of the table. This way you can just set the height for say the `.FlexiTable--body .FlexiTableSectionVSpace--edge-top` to increase the distance between the header and first body row.
 * It lets you define things in the margins with css.
 * In the initial version of this table the gutters could become narrower as the table started hitting the `min-width` limits of its columns. With more advanced column types this wasn't needed so much, but it's something I do consider adding back.
-
-### Alternatives:
-
-None of the following flexibile columns to the same degree (hence why this project exists in the first place), but they have a great deal of additional features which may suit your use case more:
-
-* Facebook's fixed-data-table (https://facebook.github.io/fixed-data-table/)
-* React-bootstrap-table (http://allenfang.github.io/react-bootstrap-table/index.html)
-* Adazzle's react-data-grid (http://adazzle.github.io/react-data-grid/)
 
 ### Dependencies
 
